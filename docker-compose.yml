@@ -1,18 +1,14 @@
 services:
-  linux-command:
-    image: docker-command:latest
-    build:
-      context: .
-      dockerfile: Dockerfile
+  frontend:
     container_name: linux-command
+    build:
+      context: ./frontend
+      dockerfile: dockerfile
+    restart: unless-stopped
     ports:
-      - "3006:80"
-    restart: "no"
+      - 3005:3005
+    volumes:
+      - ./frontend:/app:Z
+      - /app/node_modules
     environment:
-      - NODE_ENV=production
-    networks:
-      - guide-network
-
-networks:
-  guide-network:
-    driver: bridge
+      - "${FRONTEND_PORT}:5000"
