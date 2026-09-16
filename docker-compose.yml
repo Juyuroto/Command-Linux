@@ -1,14 +1,12 @@
 services:
   frontend:
     container_name: linux-command
-    build:
-      context: ./frontend
-      dockerfile: dockerfile
+    image: fubooki/command-linux:frontend
     restart: unless-stopped
     ports:
-      - 3005:3005
+      - ${FRONTEND_PORT}:${FRONTEND_PORT}
     volumes:
       - ./frontend:/app:Z
       - /app/node_modules
     environment:
-      - "${FRONTEND_PORT}:5000"
+      - "${FRONTEND_PORT}:FRONTEND_PORT"
